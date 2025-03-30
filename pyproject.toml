@@ -21,18 +21,14 @@ authors = [
 ]
 license = "Apache-2.0"
 readme = {"file" = "README.md", "content-type" = "text/markdown"}
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 # Please consult https://pypi.org/classifiers/ for a full list.
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
-    "Intended Audience :: Science/Research",
     "License :: OSI Approved :: Apache Software License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering",
@@ -40,21 +36,15 @@ classifiers = [
 ]
 # TODO: add keywords
 keywords = []
-# TODO: add dependencies
-dependencies = []
+dependencies = [
+    "eventsourcing ~=9.3",
+    "pydantic ~=2.11",
+]
 
 [project.urls]
 Homepage = "https://github.com/Midnighter/shopping-cart"
-Documentation = "https://shopping-cart.readthedocs.io"
 "Source Code" = "https://github.com/Midnighter/shopping-cart"
 "Bug Tracker" = "https://github.com/Midnighter/shopping-cart/issues"
-Download = "https://pypi.org/project/shopping-cart/#files"
-
-[project.optional-dependencies]
-dev = [
-    "hatch",
-    "pre-commit",
-]
 
 ################################################################################
 # Tool Configuration
@@ -158,6 +148,12 @@ exclude = "_version.py"
 # Hatch Environments
 ################################################################################
 
+[tool.hatch.envs.dev]
+description = """Provide a development environment."""
+extra-dependencies = [
+    "pytest",
+]
+
 [tool.hatch.envs.style]
 description = """Check the style of the codebase."""
 dependencies = [
@@ -228,7 +224,7 @@ extra-dependencies = [
 ]
 
 [[tool.hatch.envs.test.matrix]]
-python = ["3.9", "3.10", "3.11", "3.12", "3.13"]
+python = ["3.12", "3.13"]
 
 [tool.hatch.envs.test.scripts]
 run = "pytest {args:--cov=shopping_cart --cov-report=term-missing}"
