@@ -154,7 +154,9 @@ installer = "uv"
 [tool.hatch.envs.dev]
 description = """Provide a development environment."""
 extra-dependencies = [
+    "polyfactory",
     "pytest",
+    "pytest-watcher",
 ]
 
 [tool.hatch.envs.style]
@@ -220,6 +222,7 @@ check = [
 [tool.hatch.envs.test]
 description = """Run the test suite."""
 extra-dependencies = [
+    "polyfactory",
     "pytest",
     "pytest-cov",
     "pytest-raises",
