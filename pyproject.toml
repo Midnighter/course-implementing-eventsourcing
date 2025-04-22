@@ -154,6 +154,7 @@ installer = "uv"
 [tool.hatch.envs.dev]
 description = """Provide a development environment."""
 extra-dependencies = [
+    "ipython",
     "polyfactory",
     "pytest",
     "pytest-watcher",
