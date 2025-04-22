@@ -1,30 +1,15 @@
-from __future__ import annotations
-
-from datetime import datetime, timezone
-from typing import Any
-from uuid import UUID, uuid4
-
-from pydantic import BaseModel, ConfigDict
+"""Provide a domain event object."""
 
 
-class EventMetaData(BaseModel):
-    model_config = ConfigDict(frozen=True, extra="forbid")
+from datetime import datetime
+from uuid import UUID
+
+from .abstract_event import AbstractEvent
+
+
+class DomainEvent(AbstractEvent):
+    """Define the domain event object."""
 
     originator_id: UUID
     originator_version: int
     timestamp: datetime
-
-
-class DomainEvent(BaseModel):
-    model_config = ConfigDict(frozen=True, extra="forbid")
-
-    metadata: EventMetaData
-    payload: Any
-
-    @classmethod
-    def create_id(cls) -> UUID:
-        return uuid4()
-
-    @classmethod
-    def now(cls) -> datetime:
-        return datetime.now(tz=timezone.utc)

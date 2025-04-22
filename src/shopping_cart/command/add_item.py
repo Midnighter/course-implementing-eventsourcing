@@ -1,13 +1,14 @@
-from __future__ import annotations
+"""Provide an add item command."""
+
 
 from decimal import Decimal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict
+from .abstract_command import AbstractCommand
 
 
-class AddItem(BaseModel):
-    model_config = ConfigDict(frozen=True, extra="forbid")
+class AddItem(AbstractCommand):
+    """Define the add item command."""
 
     item_id: int
     product_id: UUID

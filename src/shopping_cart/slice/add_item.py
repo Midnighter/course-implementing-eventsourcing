@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from functools import reduce
 
-from shopping_cart.event import ItemAdded, EventMetaData, DomainEvent, ItemAddedPayload
+from shopping_cart.event import ItemAdded, DomainEvent
 from shopping_cart.command import AddItem
 
 
