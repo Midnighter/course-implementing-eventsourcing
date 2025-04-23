@@ -3,6 +3,8 @@
 from decimal import Decimal
 from uuid import UUID
 
+from pydantic import Field
+
 from .abstract_command import AbstractCommand
 
 
@@ -14,4 +16,4 @@ class AddItem(AbstractCommand):
     product_id: UUID
     name: str
     description: str
-    price: Decimal
+    price: Decimal = Field(ge=0)
