@@ -5,10 +5,8 @@ from .domain_event import DomainEvent
 
 
 class ItemAdded(DomainEvent):
-
-    item_id: int
+    item_id: UUID
     product_id: UUID
     name: str
     description: str
     price: Decimal
-

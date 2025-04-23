@@ -1,10 +1,14 @@
 from functools import reduce
+from typing import cast
+from uuid import UUID
 
-from shopping_cart.event import ItemAdded, DomainEvent
+from eventsourcing.persistence import EventStore
+
 from shopping_cart.command import AddItem
+from shopping_cart.event import DomainEvent, ItemAdded
 
 
-def _project_item_ids(items: list, event: DomainEvent) -> list:
+def _project_item_ids(items: list, event: DomainEvent) -> list[UUID]:
     match event:
         case ItemAdded():
             items.append(event.item_id)
@@ -13,18 +17,26 @@ def _project_item_ids(items: list, event: DomainEvent) -> list:
 
 
 def add_item(events: list[DomainEvent], command: AddItem) -> list[DomainEvent]:
-    item_ids = reduce(_project_item_ids, events, [])
+    item_ids: list[UUID] = reduce(_project_item_ids, events, [])
 
     if len(item_ids) >= 3:
         raise AssertionError("You can have only three items in your cart.")
 
-    return [ItemAdded(
-        originator_id=DomainEvent.create_id(),
-        originator_version=1,
-        timestamp=DomainEvent.now(),
-        item_id=command.item_id,
-        product_id=command.product_id,
-        name=command.name,
-        description=command.description,
-        price=command.price,
-    )]
+    return [
+        ItemAdded(
+            originator_id=command.cart_id,
+            originator_version=1,
+            timestamp=DomainEvent.now(),
+            item_id=command.item_id,
+            product_id=command.product_id,
+            name=command.name,
+            description=command.description,
+            price=command.price,
+        )
+    ]
+
+
+def handle_add_item(event_store: EventStore, command: AddItem) -> None:
+    events = cast(list[DomainEvent], event_store.get(originator_id=command.cart_id))
+    result = add_item(events, command)
+    event_store.put(result)
