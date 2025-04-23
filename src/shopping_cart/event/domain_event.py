@@ -1,6 +1,5 @@
 """Provide a domain event object."""
 
-
 from datetime import datetime
 from uuid import UUID
 

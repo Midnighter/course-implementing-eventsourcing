@@ -1,6 +1,5 @@
 """Provide an abstract base event model."""
 
-
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
 

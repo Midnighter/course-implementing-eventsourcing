@@ -1,6 +1,5 @@
 """Provide an abstract base command model."""
 
-
 from pydantic import BaseModel, ConfigDict
 
 
