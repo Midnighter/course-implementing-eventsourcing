@@ -38,6 +38,7 @@ classifiers = [
 keywords = []
 dependencies = [
     "eventsourcing ~=9.3",
+    "fastapi[standard] ~=0.115",
     "pydantic ~=2.11",
 ]
 

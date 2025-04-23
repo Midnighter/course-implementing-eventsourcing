@@ -3,6 +3,7 @@ from typing import cast
 from uuid import UUID
 
 from eventsourcing.persistence import EventStore
+from fastapi import APIRouter, status, Request
 
 from shopping_cart.command import AddItem
 from shopping_cart.event import DomainEvent, ItemAdded
@@ -32,11 +33,19 @@ def add_item(events: list[DomainEvent], command: AddItem) -> list[DomainEvent]:
             name=command.name,
             description=command.description,
             price=command.price,
-        )
+        ),
     ]
 
 
 def handle_add_item(event_store: EventStore, command: AddItem) -> None:
-    events = cast(list[DomainEvent], event_store.get(originator_id=command.cart_id))
+    events = cast("list[DomainEvent]", event_store.get(originator_id=command.cart_id))
     result = add_item(events, command)
     event_store.put(result)
+
+
+router = APIRouter(prefix="/items", tags=["items"])
+
+
+@router.post("/", status_code=status.HTTP_201_CREATED)
+def http_add_item(request: Request, cart_id: UUID, item: AddItem):
+    handle_add_item(request.state.event_store, item)
