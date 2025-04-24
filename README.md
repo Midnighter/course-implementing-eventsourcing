@@ -7,6 +7,30 @@
 
 _A sample project that implements a few vertical slices of a shopping cart event model using event sourcing._
 
+## Usage
+
+This project uses [hatch](https://hatch.pypa.io),
+please [install it](https://hatch.pypa.io/latest/install/) before going further.
+You can quickly do so with `pipx`.
+
+```shell
+pipx install hatch
+```
+
+To just try things out, you then enter the configured `dev` environment.
+
+```shell
+hatch -e dev shell
+```
+
+Now, you can start the FastAPI application
+
+```shell
+fastapi dev src/shopping_cart/http_interface.py
+```
+
+and look at the [documentation](http://127.0.0.1:8000/docs).
+
 ## Copyright
 
 - Copyright © 2025 Moritz E. Beber.
